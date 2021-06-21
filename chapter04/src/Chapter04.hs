@@ -1,7 +1,10 @@
 module Chapter04 where
 
+import Data.Bits
+import qualified Data.ByteString as B
 import Data.Char (toUpper)
 import System.Environment (getArgs)
+import System.IO
 
 run :: IO ()
 run =
@@ -57,3 +60,23 @@ run9 = do
   val <- readFile "sample.txt"
   putStrLn $ take 5 val
   writeFile "sample.txt" "Hello, Lazy IO!"
+
+run10 :: IO ()
+run10 = do
+  h <- openFile "sample.txe" ReadMode
+  loop 0 h
+  hClose h
+  where
+    loop i h = do
+      eof <- hIsEOF h
+      if not eof
+        then do
+          s <- hGetLine h
+          putStrLn $ show i ++ ":" ++ s
+          loop (i + 1) h
+        else pure ()
+
+run11 :: IO ()
+run11 = do
+  s <- B.readFile "sample"
+  B.writeFile "sample" . B.map complement $ s
