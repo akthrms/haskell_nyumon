@@ -210,11 +210,11 @@ run4 :: IO ()
 run4 = do
   print $ hello $ clone $ Human "takashi"
 
-newtype BString = BString {unBString :: String} deriving (Show)
+newtype BreedingString = BreedingString {unBreedingString :: String} deriving (Show)
 
-instance Breeding BString where
-  breed = BString
+instance Breeding BreedingString where
+  breed = BreedingString
 
 run5 :: IO ()
 run5 = do
-  print (breed "a raw string" :: BString)
+  print (breed "a raw string" :: BreedingString)
