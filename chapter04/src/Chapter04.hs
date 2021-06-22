@@ -109,14 +109,14 @@ run10 = do
 
 run11 :: IO ()
 run11 = do
-  s <- B.readFile "sample"
-  B.writeFile "sample" . B.map complement $ s
+  bs <- B.readFile "sample"
+  B.writeFile "sample" . B.map complement $ bs
 
 run12 :: IO ()
 run12 = getPermissions "sample.txt" >>= setPermissions "sample.txt" . toReadableAndWritable
 
 toReadableAndWritable :: Permissions -> Permissions
-toReadableAndWritable p = p {readable = True, writable = True}
+toReadableAndWritable permissions = permissions {readable = True, writable = True}
 
 run13 :: IO ()
 run13 = do
@@ -160,10 +160,10 @@ catchZeroDiv e = throwIO e
 
 run18 :: IO ()
 run18 = do
-  n <- (pure $ 100 `div` 0) `catch` catchZeroDiv
-  print n
-  m <- (pure $! 100 `div` 0) `catch` catchZeroDiv
-  print m
+  n1 <- (pure $ 100 `div` 0) `catch` catchZeroDiv
+  print n1
+  n2 <- (pure $! 100 `div` 0) `catch` catchZeroDiv
+  print n2
 
 someOperation :: IO ()
 someOperation = undefined
