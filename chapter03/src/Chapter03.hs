@@ -3,6 +3,8 @@ module Chapter03 where
 import qualified Data.List as L
 import qualified Data.Map.Strict as M
 
+-- 3.2.1
+
 intToArray :: Int -> Int -> [Int]
 -- intToArray n m = take m $ repeat n
 intToArray n m = replicate m n
@@ -11,16 +13,13 @@ run :: IO ()
 run = do
   print $ intToArray 3 4
 
+-- 3.4.3
+
 data CmdOption
   = CmdOptionInteger Integer
   | CmdOptionBool Bool
   | CmdOptionString String
   deriving (Show)
-
--- >>> cmdOptionToInt $ CmdOptionInteger 120
--- 120
--- >>> cmdOptionToInt $ CmdOptionString "0x78"
--- 120
 
 cmdOptionToInt :: CmdOption -> Int
 cmdOptionToInt (CmdOptionInteger n) = fromIntegral n
@@ -28,7 +27,16 @@ cmdOptionToInt (CmdOptionBool True) = 1
 cmdOptionToInt (CmdOptionBool False) = 0
 cmdOptionToInt (CmdOptionString s) = read s
 
+-- >>> cmdOptionToInt $ CmdOptionInteger 120
+-- 120
+-- >>> cmdOptionToInt $ CmdOptionString "0x78"
+-- 120
+
+-- 3.4.4
+
 data LazyAndStrict = LazyAndStrict {isLazy :: Int, isStrict :: !Int}
+
+-- 3.5
 
 data Employee = NewEmployee
   { employeeAge :: Integer,
@@ -40,8 +48,12 @@ data Employee = NewEmployee
 employee :: Employee
 employee = NewEmployee {employeeAge = 39, employeeIsManager = False, employeeName = "Subhash Khot"}
 
+-- 3.5.2
+
 employee' :: Employee
 employee' = employee {employeeIsManager = True, employeeAge = employeeAge employee + 1}
+
+-- 3.6.1
 
 data TreeDict k v
   = TreeDictEmpty
@@ -55,9 +67,6 @@ insert k v (TreeDictNode k' v' l r)
   | k > k' = TreeDictNode k' v' r (insert k v r)
   | otherwise = TreeDictNode k v l r
 
---- >>> dict
--- TreeDictNode "masahiko" 63 (TreeDictNode "hiratara" 39 TreeDictEmpty TreeDictEmpty) (TreeDictNode "shu1" 0 TreeDictEmpty TreeDictEmpty)
-
 dict :: TreeDict String Integer
 dict =
   insert "hiratara" 39
@@ -65,10 +74,8 @@ dict =
     . insert "masahiko" 63
     $ TreeDictEmpty
 
--- >>> lookup' "hiratara" dict
--- Just 39
--- >>> lookup' "pinnyu" dict
--- Nothing
+-- >>> dict
+-- TreeDictNode "masahiko" 63 (TreeDictNode "hiratara" 39 TreeDictEmpty TreeDictEmpty) (TreeDictNode "shu1" 0 TreeDictEmpty TreeDictEmpty)
 
 lookup' :: Ord k => k -> TreeDict k v -> Maybe v
 lookup' _ TreeDictEmpty = Nothing
@@ -77,8 +84,10 @@ lookup' k (TreeDictNode k' v' l r)
   | k > k' = lookup' k r
   | otherwise = Just v'
 
--- >>> M.lookup "shu1" dict'
--- Just 0
+-- >>> lookup' "hiratara" dict
+-- Just 39
+-- >>> lookup' "pinnyu" dict
+-- Nothing
 
 dict' :: M.Map String Integer
 dict' =
@@ -87,6 +96,11 @@ dict' =
     . M.insert "masahiko" 63
     $ M.empty
 
+-- >>> M.lookup "shu1" dict'
+-- Just 0
+
+-- 3.7.1
+
 type Age = Integer
 
 legalDrink :: Age -> Bool
@@ -94,12 +108,10 @@ legalDrink age
   | age >= 20 = True
   | otherwise = False
 
-run1 :: IO ()
-run1 = do
-  let age = 24 :: Age
-      n = -1 :: Integer
-  print $ legalDrink age
-  print $ legalDrink n
+-- >>> legalDrink (24 :: Age)
+-- True
+-- >>> legalDrink (-1 :: Integer)
+-- False
 
 data AppErr = AppErr deriving (Show)
 
@@ -109,10 +121,12 @@ safeHead :: [a] -> AppResult a
 safeHead [] = Left AppErr
 safeHead (x : _) = Right x
 
-run2 :: IO ()
-run2 = do
-  print $ safeHead ([1, 2, 3] :: [Int])
-  print $ safeHead ([] :: [Int])
+-- >>> safeHead ([1, 2, 3] :: [Int])
+-- Right 1
+-- >>> safeHead ([] :: [Int])
+-- Left AppErr
+
+-- 3.7.2
 
 newtype NewTypeIndexed a = NewTypeIndexed {unNewTypeIndexed :: (Integer, a)} deriving (Show)
 
@@ -122,11 +136,14 @@ x = NewTypeIndexed (10, "ten")
 y :: NewTypeIndexed String
 y = NewTypeIndexed (12, "twelve")
 
-run3 :: IO ()
-run3 = do
-  print $ NewTypeIndexed $ unNewTypeIndexed x
-  print $ unNewTypeIndexed $ NewTypeIndexed (2, "two")
-  print $ snd $ unNewTypeIndexed y
+-- >>> NewTypeIndexed $ unNewTypeIndexed x
+-- NewTypeIndexed {unNewTypeIndexed = (10,"ten")}
+-- >>> unNewTypeIndexed $ NewTypeIndexed (2, "two")
+-- (2,"two")
+-- >>> snd $ unNewTypeIndexed y
+-- "twelve"
+
+-- 3.8.3
 
 data Dog = Dog deriving (Show)
 
@@ -143,39 +160,39 @@ class Greeting a where
   bye :: a -> String
   bye _ = "..."
 
--- >>> hello $ Human "takashi"
--- "Hi, I'm takashi."
--- >>> hello Dog
--- "Bark!"
--- >>> hello Cat
--- "..."
--- >>> bye $ Human "takashi"
--- "See you."
--- >>> bye Dog
--- "..."
--- >>> bye Cat
--- "Meow..."
-
 instance Greeting Dog where
   name _ = "a dog"
-
   hello _ = "Bark!"
 
 instance Greeting Cat where
   name _ = "a cat"
-
   bye _ = "Meow..."
 
 instance Greeting Human where
   name (Human n) = n
-
   hello h = "Hi, I'm " ++ name h ++ "."
-
   bye _ = "See you."
+
+-- >>> hello Dog
+-- "Bark!"
+-- >>> hello Cat
+-- "..."
+-- >>> hello $ Human "takashi"
+-- "Hi, I'm takashi."
+
+-- >>> bye Dog
+-- "..."
+-- >>> bye Cat
+-- "Meow..."
+-- >>> bye $ Human "takashi"
+-- "See you."
+
+-- 3.9.1
 
 sayHello :: Greeting a => a -> IO ()
 sayHello x = putStrLn $ hello x
 
+-- 3.9.2
 class Greeting a => Laughing a where
   laugh :: a -> String
 
@@ -187,15 +204,17 @@ leaveWithLaugh x = do
   putStrLn $ bye x
   putStrLn $ laugh x
 
+-- 3.9.3
+
 liftGreet :: (a -> String) -> ([a] -> String)
 liftGreet f = L.intercalate "\n" . map f
 
 instance Greeting a => Greeting [a] where
   name = liftGreet name
-
   hello = liftGreet hello
-
   bye = liftGreet bye
+
+-- 3.9.4
 
 class Breeding a where
   breed :: String -> a
@@ -206,15 +225,13 @@ instance Breeding Human where
 clone :: (Breeding a, Greeting a) => a -> a
 clone x = breed (name x) `asTypeOf` x
 
-run4 :: IO ()
-run4 = do
-  print $ hello $ clone $ Human "takashi"
+-- >>> hello $ clone $ Human "takashi"
+-- "Hi, I'm takashi."
 
 newtype BreedingString = BreedingString {unBreedingString :: String} deriving (Show)
 
 instance Breeding BreedingString where
   breed = BreedingString
 
-run5 :: IO ()
-run5 = do
-  print (breed "a raw string" :: BreedingString)
+-- >>> breed "a raw string" :: BreedingString
+-- BreedingString {unBreedingString = "a raw string"}
