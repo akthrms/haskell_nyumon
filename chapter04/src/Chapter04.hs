@@ -132,7 +132,7 @@ run11 = do
   findFilesWith checkWritable [currentDirectory ++ "/..", currentDirectory] "target.txt" >>= print
   where
     -- checkWritable filePath = getPermissions filePath >>= pure . writable
-    checkWritable filePath = writable <$> getPermissions filePath
+    checkWritable = fmap writable . getPermissions
 
 -- 4.5.1
 
