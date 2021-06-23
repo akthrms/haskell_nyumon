@@ -1,17 +1,67 @@
 module Chapter05 where
 
 import Control.Applicative (Alternative ((<|>)))
-import Control.Monad (forM_, guard)
-import qualified Control.Monad.Trans.Except as EX
+import Control.Exception.Lifted (bracket)
+import Control.Monad (forM_, guard, unless)
+import Control.Monad.Except
+  ( Except,
+    MonadError (catchError, throwError),
+    MonadTrans (lift),
+    forM_,
+    guard,
+    runExcept,
+    runExceptT,
+    unless,
+  )
+import Control.Monad.ST (ST, runST)
+import Control.Monad.Trans.Class (MonadTrans (lift))
+import Control.Monad.Trans.Except
+  ( Except,
+    catchE,
+    runExcept,
+    runExceptT,
+    throwE,
+  )
 import Control.Monad.Trans.Reader
   ( Reader,
+    ReaderT (runReaderT),
     ask,
     asks,
     local,
     runReader,
   )
-import Control.Monad.Trans.State (State, get, put, runState)
+import Control.Monad.Trans.State
+  ( State,
+    evalStateT,
+    get,
+    modify,
+    put,
+    runState,
+  )
+import Control.Monad.Writer
+  ( MonadTrans (lift),
+    MonadWriter (tell),
+    WriterT (runWriterT),
+    forM_,
+    guard,
+    unless,
+  )
+import Data.Array.ST
+  ( STUArray,
+    getElems,
+    newListArray,
+    readArray,
+    writeArray,
+  )
+import Data.IORef (IORef, modifyIORef, newIORef, readIORef)
 import Data.List (sort)
+import Data.STRef (modifySTRef, newSTRef, readSTRef)
+import System.IO
+  ( IOMode (ReadMode),
+    hClose,
+    hGetContents,
+    openFile,
+  )
 import System.Random.Shuffle (shuffleM)
 
 -- 5.1.1
@@ -179,14 +229,14 @@ calc' n = do
 
 -- 5.4.2
 
-safeDiv'' :: Integer -> Integer -> EX.Except String Integer
+safeDiv'' :: Integer -> Integer -> Except String Integer
 safeDiv'' k n
-  | n == 0 = EX.throwE $ "Illegal division by zero. k: " ++ show k
+  | n == 0 = throwE $ "Illegal division by zero. k: " ++ show k
   | otherwise = pure $ k `div` n
 
 calc'' :: Integer -> Either String Integer
-calc'' n = EX.runExcept $ do
-  EX.catchE
+calc'' n = runExcept $ do
+  catchE
     ( do
         x <- 100 `safeDiv''` n
         100 `safeDiv''` (x - 1)
@@ -214,14 +264,14 @@ run5 :: IO ()
 run5 = print $ runReader consume $ PowerEnv 10.0 True
 
 testRun :: PowerEnv -> Double
-testRun env = (`runReader` env) $ do
-  cons1 <- consume
-  cons2 <- consume
-  consOther <- local (\e -> e {powerSaveMode = True}) $ do
-    cons3 <- consume
-    cons4 <- consume
-    pure $ cons3 + cons4
-  pure $ cons1 + cons2 + consOther
+testRun powerEnv = (`runReader` powerEnv) $ do
+  consumption1 <- consume
+  consumption2 <- consume
+  consumptionOther <- local (\pe -> pe {powerSaveMode = True}) $ do
+    consumption3 <- consume
+    consumption4 <- consume
+    pure $ consumption3 + consumption4
+  pure $ consumption1 + consumption2 + consumptionOther
 
 -- >>> testRun $ PowerEnv 100.0 False
 -- 220.0
@@ -229,3 +279,161 @@ testRun env = (`runReader` env) $ do
 -- 176.0
 -- >>> testRun $ PowerEnv 100.0 True
 -- 40.0
+
+-- 5.6.1
+
+procCount :: Integer
+procCount = runST $ do
+  n <- newSTRef 0
+
+  forM_ [1 .. 10] $ \i -> do
+    modifySTRef n (+ 1)
+
+  readSTRef n
+
+run6 :: IO ()
+run6 = print procCount
+
+-- 5.6.2
+
+doubleArray :: [Double]
+doubleArray = runST $ do
+  array <- newListArray (0, 4) [1 .. 5] :: ST s (STUArray s Int Double)
+  x <- readArray array 2
+  writeArray array 2 (x * 10.0)
+  getElems array
+
+-- 5.7
+
+points :: [(Integer, Integer)]
+points = do
+  x <- [1 .. 3]
+  y <- [1 .. 3]
+  pure (x, y)
+
+-- >>> points
+-- [(1,1),(1,2),(1,3),(2,1),(2,2),(2,3),(3,1),(3,2),(3,3)]
+
+-- 5.7.1
+
+orderedPoints :: [(Integer, Integer)]
+orderedPoints = do
+  x <- [1 .. 3]
+  y <- [1 .. 3]
+  guard (x < y)
+  pure (x, y)
+
+-- >>> orderedPoints
+-- [(1,2),(1,3),(2,3)]
+
+-- 5.7.2
+
+-- >>> [(x, y) | x <- [1 .. 3], y <- [1 .. 3], x < y]
+-- [(1,2),(1,3),(2,3)]
+
+monadHead :: MonadFail m => [a] -> m a
+monadHead xs = do
+  (x : _) <- pure xs
+  pure x
+
+-- >>> monadHead [] :: Maybe Int
+-- Nothing
+-- >>> monadHead [] :: [Int]
+-- []
+
+-- 5.8.2
+
+data Env = Env {envX :: !Integer, envY :: !Integer}
+
+sumEnv :: ReaderT Env IO Integer
+sumEnv = do
+  x <- asks envX
+  y <- asks envY
+  pure $ x + y
+
+-- >>> runReaderT sumEnv (Env 10 20)
+-- 30
+
+sumEnvIO :: ReaderT Env IO Integer
+sumEnvIO = do
+  x <- asks envX
+  lift $ putStrLn $ "x = " ++ show x
+  y <- asks envY
+  lift $ putStrLn $ "y = " ++ show y
+  pure $ x + y
+
+-- >>> runReaderT sumEnvIO (Env 10 20)
+-- 30
+
+newtype Env' = Env' {envCount :: IORef Int}
+
+countUp :: Int -> ReaderT Env' IO ()
+countUp n = do
+  ref <- asks envCount
+  lift $ modifyIORef ref (+ n)
+
+count :: ReaderT Env' IO Int
+count = asks envCount >>= lift . readIORef
+
+sum10 :: ReaderT Env' IO ()
+sum10 = do
+  forM_ [1 .. 10] $ \i -> do
+    countUp i
+    n <- count
+    lift $ putStrLn $ "sum = " ++ show n
+
+run7 :: IO ()
+run7 = do
+  ref <- newIORef 0
+  runReaderT sum10 (Env' ref)
+  readIORef ref >>= print
+
+-- 5.8.3
+
+run8 :: IO ()
+run8 = do
+  result <- (`evalStateT` 0) $ runExceptT loop
+  case result of
+    Right _ -> pure ()
+    Left e -> putStrLn e
+  where
+    loop = do
+      i <- st get
+      unless (i < (3 :: Int)) $ throwE "Too much failure"
+      operation <- io getLine
+      if operation == "end"
+        then pure ()
+        else do
+          st $ modify (+ 1)
+          loop
+    io = lift . lift
+    st = lift
+
+-- 5.8.6
+
+mtlSample :: Either String ((), String)
+mtlSample = runExcept $
+  runWriterT $ do
+    tell "Start\n"
+    (`catchError` handler) $ do
+      tell "In the block\n"
+      _ <- throwError "some exception"
+      tell "Never reach here\n"
+    tell "End\n"
+  where
+    handler :: String -> WriterT String (Except String) ()
+    handler e = tell $ "Caught the exception: " ++ e ++ "\n"
+
+-- >>> mtlSample
+-- Right ((),"Start\nCaught the exception: some exception\nEnd\n")
+
+run9 :: IO ()
+run9 = (`runReaderT` "sample.txt") $ do
+  bracket open close $ \handle -> do
+    content <- lift $ hGetContents handle
+    lift $ print $ length content
+  where
+    open = do
+      filePath <- ask
+      lift $ openFile filePath ReadMode
+    close = lift . hClose
