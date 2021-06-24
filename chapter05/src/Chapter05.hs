@@ -154,10 +154,10 @@ gameWithState = do
         (sum yumiHand, yumiHand, "Yumi")
       ]
 
-run :: IO ()
-run = do
-  print $ game [1 .. 50]
-  print $ runState gameWithState [1 .. 50]
+-- >>> fst $ runState gameWithState [1 .. 50]
+-- [(90,[16,17,18,19,20],"Yumi"),(65,[11,12,13,14,15],"Takashi"),(40,[6,7,8,9,10],"Hanako"),(15,[1,2,3,4,5],"Taro")]
+-- >>> snd $ runState gameWithState [1 .. 50]
+-- [21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50]
 
 runGame :: IO ()
 runGame = do
@@ -166,8 +166,8 @@ runGame = do
 
 -- 5.2.1
 
-run1 :: IO ()
-run1 = do
+run :: IO ()
+run = do
   forM_ [1 .. 9] $ \x -> do
     forM_ [1 .. 9] $ \y -> do
       putStr $ show (x * y) ++ "\t"
@@ -179,19 +179,20 @@ data Gender = Man | Woman deriving (Show)
 
 data Human = Human {name :: String, age :: Int, gender :: Gender} deriving (Show)
 
-run2 :: IO ()
-run2 = do
-  print $ Human "Taro" 10 Man
-  print $ Human <$> Just "Taro" <*> pure 10 <*> pure Man
-  print $ Human <$> Just "Taro" <*> Nothing <*> pure Man
+-- >>> Human "Taro" 10 Man
+-- Human {name = "Taro", age = 10, gender = Man}
+-- >>> Human <$> Just "Taro" <*> pure 10 <*> pure Man
+-- Just (Human {name = "Taro", age = 10, gender = Man})
+-- >>> Human <$> Just "Taro" <*> Nothing <*> pure Man
+-- Nothing
 
 -- 5.3.3
 
 assocs :: [(String, Integer)]
 assocs = [("hiratara", 39), ("shu1", 0), ("masaharu", 32)]
 
-run3 :: IO ()
-run3 = do
+run2 :: IO ()
+run2 = do
   print $ lookup "homma" assocs <|> lookup "hiratara" assocs
   print $ do
     age <- lookup "homma" assocs <|> lookup "hiratara" assocs
@@ -245,10 +246,13 @@ calc'' n = runExcept $ do
 
 -- 5.5.1
 
-run4 :: IO ()
-run4 = print $ runReader readRound 1.5013232
+run3 :: IO ()
+run3 = print $ runReader readRound 1.5013232
 
 readRound :: Reader Double Int
+-- readRound = do
+--   x <- ask
+--   pure $ round x
 readRound = do round <$> ask
 
 data PowerEnv = PowerEnv {powerEnergy :: !Double, powerSaveMode :: !Bool}
@@ -260,8 +264,8 @@ consume = do
   let consumption = if saveMode then energy / 10.0 else energy
   pure consumption
 
-run5 :: IO ()
-run5 = print $ runReader consume $ PowerEnv 10.0 True
+-- >>> runReader consume $ PowerEnv 10.0 True
+-- 1.0
 
 testRun :: PowerEnv -> Double
 testRun powerEnv = (`runReader` powerEnv) $ do
@@ -291,17 +295,17 @@ procCount = runST $ do
 
   readSTRef n
 
-run6 :: IO ()
-run6 = print procCount
+-- >>> procCount
+-- 10
 
 -- 5.6.2
 
 doubleArray :: [Double]
 doubleArray = runST $ do
-  array <- newListArray (0, 4) [1 .. 5] :: ST s (STUArray s Int Double)
-  x <- readArray array 2
-  writeArray array 2 (x * 10.0)
-  getElems array
+  arr <- newListArray (0, 4) [1 .. 5] :: ST s (STUArray s Int Double)
+  x <- readArray arr 2
+  writeArray arr 2 (x * 10.0)
+  getElems arr
 
 -- 5.7
 
@@ -382,32 +386,32 @@ sum10 = do
     n <- count
     lift $ putStrLn $ "sum = " ++ show n
 
-run7 :: IO ()
-run7 = do
+run4 :: IO ()
+run4 = do
   ref <- newIORef 0
   runReaderT sum10 (Env' ref)
   readIORef ref >>= print
 
 -- 5.8.3
 
-run8 :: IO ()
-run8 = do
+run5 :: IO ()
+run5 = do
   result <- (`evalStateT` 0) $ runExceptT loop
   case result of
     Right _ -> pure ()
     Left e -> putStrLn e
   where
     loop = do
-      i <- st get
-      unless (i < (3 :: Int)) $ throwE "Too much failure"
+      i <- state get
+      unless (i < 3) $ throwE "Too much failure"
       operation <- io getLine
       if operation == "end"
         then pure ()
         else do
-          st $ modify (+ 1)
+          state $ modify (+ 1)
           loop
     io = lift . lift
-    st = lift
+    state = lift
 
 -- 5.8.6
 
@@ -427,11 +431,11 @@ mtlSample = runExcept $
 -- >>> mtlSample
 -- Right ((),"Start\nCaught the exception: some exception\nEnd\n")
 
-run9 :: IO ()
-run9 = (`runReaderT` "sample.txt") $ do
+run6 :: IO ()
+run6 = (`runReaderT` "sample.txt") $ do
   bracket open close $ \handle -> do
-    content <- lift $ hGetContents handle
-    lift $ print $ length content
+    contents <- lift $ hGetContents handle
+    lift $ print $ length contents
   where
     open = do
       filePath <- ask
