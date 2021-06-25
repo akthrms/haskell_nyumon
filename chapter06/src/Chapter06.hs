@@ -111,9 +111,7 @@ foreachLine source action =
 -- 6.2.2
 
 run3 :: IO ()
-run3 = do
-  filePaths <- getArgs
-  foreachFileLine filePaths putStrLn
+run3 = getArgs >>= (`foreachFileLine` putStrLn)
 
 foreachFileLine :: [FilePath] -> (String -> IO a) -> IO ()
 foreachFileLine filePaths lineHandler = handleFiles filePaths (`foreachLine` lineHandler)
