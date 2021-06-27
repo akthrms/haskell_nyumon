@@ -1,6 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module Chapter07 where
+module Chapter0701 where
 
 import Control.Applicative
 import Control.Monad
