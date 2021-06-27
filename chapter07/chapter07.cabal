@@ -23,7 +23,12 @@ extra-source-files: CHANGELOG.md
 
 library
   -- cabal-fmt: expand src
-  exposed-modules:  MyLib
+  exposed-modules:
+    Chapter0703
+    Chapter0704
+    Chapter0705
+    Chapter0706
+    MyLib
 
   -- Modules included in this library but not exported.
   -- other-modules:
