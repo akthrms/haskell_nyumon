@@ -28,6 +28,9 @@ library
     Chapter0704
     Chapter0705
     Chapter0706
+    Chapter0707
+    Chapter0708
+    Chapter0709
     MyLib
 
   -- Modules included in this library but not exported.
@@ -38,10 +41,14 @@ library
   build-depends:
     , aeson
     , attoparsec
-    , base        ^>=4.14.1.0
+    , base         ^>=4.14.1.0
     , bytestring
+    , lens
+    , mtl
+    , operational
     , split
     , text
+    , time
     , vector
 
   hs-source-dirs:   src
