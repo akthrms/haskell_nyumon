@@ -31,6 +31,7 @@ library
     Chapter0707
     Chapter0708
     Chapter0709
+    Chapter0710
     MyLib
 
   -- Modules included in this library but not exported.
@@ -46,6 +47,7 @@ library
     , lens
     , mtl
     , operational
+    , pipes
     , split
     , text
     , time

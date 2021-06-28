@@ -29,29 +29,29 @@ makeLenses ''User
 user :: User
 user = User {_userName = "Taro", _userAge = 25, userPassword = "12345"}
 
-run :: IO ()
-run = do
-  print $ user ^. userName
-  print $ user ^. userAge
-  print $ user & userName .~ "Jiro"
+-- >>> user ^. userName
+-- "Taro"
+-- >>> user ^. userAge
+-- 25
+-- >>> user & userName .~ "Jiro"
+-- User {_userName = "Jiro", _userAge = 25, userPassword = "12345"}
 
 userPasswordLens :: Lens User User String String
 userPasswordLens = lens userPassword $ \u p -> u {userPassword = p}
 
-run2 :: IO ()
-run2 = do
-  print $ user ^. userPasswordLens
-  print $ user & userPasswordLens .~ "new-password"
-
-run3 :: IO ()
-run3 = do
-  print $ runState lensWithState user
+-- >>> user ^. userPasswordLens
+-- "12345"
+-- >>> user & userPasswordLens .~ "new-password"
+-- User {_userName = "Taro", _userAge = 25, userPassword = "new-password"}
 
 lensWithState :: State User Int
 lensWithState = do
   age <- use userAge
   userName .= "Jiro"
   pure age
+
+-- >>> runState lensWithState user
+-- (25,User {_userName = "Jiro", _userAge = 25, userPassword = "12345"})
 
 leftValue :: Either String String
 leftValue = Left "Left Value"
