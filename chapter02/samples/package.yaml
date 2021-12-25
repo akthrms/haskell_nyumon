@@ -1,48 +1,26 @@
-name:                samples
-version:             0.1.0.0
-github:              "githubuser/samples"
-license:             BSD3
-author:              "Author name here"
-maintainer:          "example@example.com"
-copyright:           "2021 Author name here"
-
-extra-source-files:
-- README.md
-- ChangeLog.md
-
-# Metadata used when publishing your package
-# synopsis:            Short description of your package
-# category:            Web
-
-# To avoid duplicated efforts in documentation and dealing with the
-# complications of embedding Haddock markup inside cabal files, it is
-# common to point users to the README.md file.
-description:         Please see the README on GitHub at <https://github.com/githubuser/samples#readme>
+name: samples
+version: 0.1.0.0
 
 dependencies:
-- base >= 4.7 && < 5
-
-library:
-  source-dirs: src
+  - base >= 4.7 && < 5
 
 executables:
-  samples-exe:
-    main:                Main.hs
-    source-dirs:         app
+  main01:
+    main: Main01.hs
+    source-dirs: app
     ghc-options:
-    - -threaded
-    - -rtsopts
-    - -with-rtsopts=-N
-    dependencies:
-    - samples
+      - -Wall
+      - -Wcompat
+      - -Wincomplete-record-updates
+      - -Wincomplete-uni-patterns
+      - -Wmissing-import-lists
 
-tests:
-  samples-test:
-    main:                Spec.hs
-    source-dirs:         test
+  main02:
+    main: Main02.hs
+    source-dirs: app
     ghc-options:
-    - -threaded
-    - -rtsopts
-    - -with-rtsopts=-N
-    dependencies:
-    - samples
+      - -Wall
+      - -Wcompat
+      - -Wincomplete-record-updates
+      - -Wincomplete-uni-patterns
+      - -Wmissing-import-lists
