@@ -4,23 +4,26 @@ version: 0.1.0.0
 dependencies:
   - base >= 4.7 && < 5
 
+ghc-options:
+  - -Wall
+  - -Wcompat
+  - -Wincomplete-record-updates
+  - -Wincomplete-uni-patterns
+  - -Wmissing-import-lists
+
 executables:
   main01:
     main: Main01.hs
     source-dirs: app
-    ghc-options:
-      - -Wall
-      - -Wcompat
-      - -Wincomplete-record-updates
-      - -Wincomplete-uni-patterns
-      - -Wmissing-import-lists
 
   main02:
     main: Main02.hs
     source-dirs: app
-    ghc-options:
-      - -Wall
-      - -Wcompat
-      - -Wincomplete-record-updates
-      - -Wincomplete-uni-patterns
-      - -Wmissing-import-lists
+
+  main03:
+    main: Main03.hs
+    source-dirs: app
+
+  main04:
+    main: Main04.hs
+    source-dirs: app

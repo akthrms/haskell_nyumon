@@ -12,6 +12,8 @@ executable main01
   main-is: Main01.hs
   other-modules:
       Main02
+      Main03
+      Main04
       Paths_samples
   hs-source-dirs:
       app
@@ -24,6 +26,36 @@ executable main02
   main-is: Main02.hs
   other-modules:
       Main01
+      Main03
+      Main04
+      Paths_samples
+  hs-source-dirs:
+      app
+  ghc-options: -Wall -Wcompat -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-import-lists
+  build-depends:
+      base >=4.7 && <5
+  default-language: Haskell2010
+
+executable main03
+  main-is: Main03.hs
+  other-modules:
+      Main01
+      Main02
+      Main04
+      Paths_samples
+  hs-source-dirs:
+      app
+  ghc-options: -Wall -Wcompat -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-import-lists
+  build-depends:
+      base >=4.7 && <5
+  default-language: Haskell2010
+
+executable main04
+  main-is: Main04.hs
+  other-modules:
+      Main01
+      Main02
+      Main03
       Paths_samples
   hs-source-dirs:
       app
