@@ -8,8 +8,8 @@ name:           samples
 version:        0.1.0.0
 build-type:     Simple
 
-executable samples-exe
-  main-is: Main.hs
+executable main01
+  main-is: Main01.hs
   other-modules:
       Paths_samples
   hs-source-dirs:

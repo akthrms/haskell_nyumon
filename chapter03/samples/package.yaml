@@ -10,6 +10,6 @@ ghc-options:
   - -with-rtsopts=-N
 
 executables:
-  samples-exe:
-    main: Main.hs
+  main01:
+    main: Main01.hs
     source-dirs: app
