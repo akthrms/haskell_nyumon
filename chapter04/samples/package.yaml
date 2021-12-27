@@ -4,6 +4,7 @@ version: 0.1.0.0
 dependencies:
   - base >= 4.7 && < 5
   - bytestring
+  - directory
 
 ghc-options:
   - -threaded
@@ -29,4 +30,8 @@ executables:
 
   main05:
     main: Main05.hs
+    source-dirs: app
+
+  main06:
+    main: Main06.hs
     source-dirs: app

@@ -15,6 +15,7 @@ executable main01
       Main03
       Main04
       Main05
+      Main06
       Paths_samples
   hs-source-dirs:
       app
@@ -22,6 +23,7 @@ executable main01
   build-depends:
       base >=4.7 && <5
     , bytestring
+    , directory
   default-language: Haskell2010
 
 executable main02
@@ -31,6 +33,7 @@ executable main02
       Main03
       Main04
       Main05
+      Main06
       Paths_samples
   hs-source-dirs:
       app
@@ -38,6 +41,7 @@ executable main02
   build-depends:
       base >=4.7 && <5
     , bytestring
+    , directory
   default-language: Haskell2010
 
 executable main03
@@ -47,6 +51,7 @@ executable main03
       Main02
       Main04
       Main05
+      Main06
       Paths_samples
   hs-source-dirs:
       app
@@ -54,6 +59,7 @@ executable main03
   build-depends:
       base >=4.7 && <5
     , bytestring
+    , directory
   default-language: Haskell2010
 
 executable main04
@@ -63,6 +69,7 @@ executable main04
       Main02
       Main03
       Main05
+      Main06
       Paths_samples
   hs-source-dirs:
       app
@@ -70,6 +77,7 @@ executable main04
   build-depends:
       base >=4.7 && <5
     , bytestring
+    , directory
   default-language: Haskell2010
 
 executable main05
@@ -79,6 +87,7 @@ executable main05
       Main02
       Main03
       Main04
+      Main06
       Paths_samples
   hs-source-dirs:
       app
@@ -86,4 +95,23 @@ executable main05
   build-depends:
       base >=4.7 && <5
     , bytestring
+    , directory
+  default-language: Haskell2010
+
+executable main06
+  main-is: Main06.hs
+  other-modules:
+      Main01
+      Main02
+      Main03
+      Main04
+      Main05
+      Paths_samples
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , bytestring
+    , directory
   default-language: Haskell2010
