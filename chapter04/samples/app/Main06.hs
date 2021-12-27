@@ -1,6 +1,14 @@
 module Main06 where
 
 import System.Directory
+  ( Permissions (readable, writable),
+    findFile,
+    findFiles,
+    findFilesWith,
+    getCurrentDirectory,
+    getPermissions,
+    setPermissions,
+  )
 
 -- 4.4.2
 
