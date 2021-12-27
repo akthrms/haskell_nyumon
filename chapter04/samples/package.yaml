@@ -35,3 +35,15 @@ executables:
   main06:
     main: Main06.hs
     source-dirs: app
+
+  main07:
+    main: Main07.hs
+    source-dirs: app
+
+  main08:
+    main: Main08.hs
+    source-dirs: app
+
+  main09:
+    main: Main09.hs
+    source-dirs: app
