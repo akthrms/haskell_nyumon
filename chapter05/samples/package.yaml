@@ -51,3 +51,7 @@ executables:
   main10:
     main: Main10.hs
     source-dirs: app
+
+  main11:
+    main: Main11.hs
+    source-dirs: app
