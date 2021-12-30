@@ -4,6 +4,7 @@ version: 0.1.0.0
 dependencies:
   - base >= 4.7 && < 5
   - transformers
+  - array
 
 ghc-options:
   - -threaded
@@ -33,4 +34,12 @@ executables:
 
   main06:
     main: Main06.hs
+    source-dirs: app
+
+  main07:
+    main: Main07.hs
+    source-dirs: app
+
+  main08:
+    main: Main08.hs
     source-dirs: app
