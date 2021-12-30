@@ -47,3 +47,7 @@ executables:
   main09:
     main: Main09.hs
     source-dirs: app
+
+  main10:
+    main: Main10.hs
+    source-dirs: app
