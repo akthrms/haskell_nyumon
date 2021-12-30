@@ -43,3 +43,7 @@ executables:
   main08:
     main: Main08.hs
     source-dirs: app
+
+  main09:
+    main: Main09.hs
+    source-dirs: app
