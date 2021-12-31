@@ -5,6 +5,8 @@ dependencies:
   - base >= 4.7 && < 5
   - transformers
   - array
+  - mtl
+  - lifted-base
 
 ghc-options:
   - -threaded
@@ -58,4 +60,12 @@ executables:
 
   main12:
     main: Main12.hs
+    source-dirs: app
+
+  main13:
+    main: Main13.hs
+    source-dirs: app
+
+  main14:
+    main: Main14.hs
     source-dirs: app
