@@ -3,6 +3,8 @@ version: 0.1.0.0
 
 dependencies:
   - base >= 4.7 && < 5
+  - bytestring
+  - vector
 
 ghc-options:
   - -threaded
@@ -12,4 +14,8 @@ ghc-options:
 executables:
   main01:
     main: Main01.hs
+    source-dirs: app
+
+  main02:
+    main: Main02.hs
     source-dirs: app
