@@ -21,6 +21,7 @@ executable main01
       attoparsec
     , base >=4.7 && <5
     , bytestring
+    , split
     , vector
   default-language: Haskell2010
 
@@ -37,6 +38,7 @@ executable main02
       attoparsec
     , base >=4.7 && <5
     , bytestring
+    , split
     , vector
   default-language: Haskell2010
 
@@ -53,5 +55,6 @@ executable main03
       attoparsec
     , base >=4.7 && <5
     , bytestring
+    , split
     , vector
   default-language: Haskell2010
