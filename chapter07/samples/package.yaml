@@ -5,6 +5,7 @@ dependencies:
   - base >= 4.7 && < 5
   - bytestring
   - vector
+  - attoparsec
 
 ghc-options:
   - -threaded
@@ -18,4 +19,8 @@ executables:
 
   main02:
     main: Main02.hs
+    source-dirs: app
+
+  main03:
+    main: Main03.hs
     source-dirs: app
