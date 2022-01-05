@@ -7,6 +7,7 @@ dependencies:
   - vector
   - split
   - attoparsec
+  - aeson
 
 ghc-options:
   - -threaded
@@ -36,4 +37,8 @@ executables:
 
   main06:
     main: Main06.hs
+    source-dirs: app
+
+  main07:
+    main: Main07.hs
     source-dirs: app
