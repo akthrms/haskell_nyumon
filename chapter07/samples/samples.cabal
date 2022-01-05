@@ -14,6 +14,7 @@ executable main01
       Main02
       Main03
       Main04
+      Main05
       Paths_samples
   hs-source-dirs:
       app
@@ -32,6 +33,7 @@ executable main02
       Main01
       Main03
       Main04
+      Main05
       Paths_samples
   hs-source-dirs:
       app
@@ -50,6 +52,7 @@ executable main03
       Main01
       Main02
       Main04
+      Main05
       Paths_samples
   hs-source-dirs:
       app
@@ -68,6 +71,26 @@ executable main04
       Main01
       Main02
       Main03
+      Main05
+      Paths_samples
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      attoparsec
+    , base >=4.7 && <5
+    , bytestring
+    , split
+    , vector
+  default-language: Haskell2010
+
+executable main05
+  main-is: Main05.hs
+  other-modules:
+      Main01
+      Main02
+      Main03
+      Main04
       Paths_samples
   hs-source-dirs:
       app
