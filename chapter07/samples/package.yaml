@@ -33,3 +33,7 @@ executables:
   main05:
     main: Main05.hs
     source-dirs: app
+
+  main06:
+    main: Main06.hs
+    source-dirs: app
