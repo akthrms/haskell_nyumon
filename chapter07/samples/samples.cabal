@@ -17,6 +17,7 @@ executable main01
       Main05
       Main06
       Main07
+      Main08
       Paths_samples
   hs-source-dirs:
       app
@@ -39,6 +40,7 @@ executable main02
       Main05
       Main06
       Main07
+      Main08
       Paths_samples
   hs-source-dirs:
       app
@@ -61,6 +63,7 @@ executable main03
       Main05
       Main06
       Main07
+      Main08
       Paths_samples
   hs-source-dirs:
       app
@@ -83,6 +86,7 @@ executable main04
       Main05
       Main06
       Main07
+      Main08
       Paths_samples
   hs-source-dirs:
       app
@@ -105,6 +109,7 @@ executable main05
       Main04
       Main06
       Main07
+      Main08
       Paths_samples
   hs-source-dirs:
       app
@@ -127,6 +132,7 @@ executable main06
       Main04
       Main05
       Main07
+      Main08
       Paths_samples
   hs-source-dirs:
       app
@@ -149,6 +155,30 @@ executable main07
       Main04
       Main05
       Main06
+      Main08
+      Paths_samples
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aeson
+    , attoparsec
+    , base >=4.7 && <5
+    , bytestring
+    , split
+    , vector
+  default-language: Haskell2010
+
+executable main08
+  main-is: Main08.hs
+  other-modules:
+      Main01
+      Main02
+      Main03
+      Main04
+      Main05
+      Main06
+      Main07
       Paths_samples
   hs-source-dirs:
       app

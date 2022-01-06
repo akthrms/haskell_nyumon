@@ -5,7 +5,11 @@
 module Main07 where
 
 import Data.Aeson (decode, defaultOptions, eitherDecode, encode)
-import Data.Aeson.TH (deriveJSON)
+import Data.Aeson.TH
+  ( Options (fieldLabelModifier),
+    defaultOptions,
+    deriveJSON,
+  )
 import qualified Data.ByteString.Lazy.Char8 as B
 
 -- 7.6.1
@@ -24,7 +28,16 @@ data Department = Department
 
 deriveJSON defaultOptions ''Human
 
-deriveJSON defaultOptions ''Department
+-- 7.6.3
+
+deriveJSON
+  ( defaultOptions
+      { fieldLabelModifier = \s -> case s of
+          "departmentName" -> "name"
+          t -> t
+      }
+  )
+  ''Department
 
 taro :: Human
 taro = Human {name = "Taro", age = 30}
