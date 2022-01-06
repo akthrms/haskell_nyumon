@@ -22,6 +22,7 @@ executable main01
       Main10
       Main11
       Main12
+      Main13
       Paths_samples
   hs-source-dirs:
       app
@@ -34,6 +35,7 @@ executable main01
     , lens
     , mtl
     , operational
+    , pipes
     , split
     , time
     , vector
@@ -53,6 +55,7 @@ executable main02
       Main10
       Main11
       Main12
+      Main13
       Paths_samples
   hs-source-dirs:
       app
@@ -65,6 +68,7 @@ executable main02
     , lens
     , mtl
     , operational
+    , pipes
     , split
     , time
     , vector
@@ -84,6 +88,7 @@ executable main03
       Main10
       Main11
       Main12
+      Main13
       Paths_samples
   hs-source-dirs:
       app
@@ -96,6 +101,7 @@ executable main03
     , lens
     , mtl
     , operational
+    , pipes
     , split
     , time
     , vector
@@ -115,6 +121,7 @@ executable main04
       Main10
       Main11
       Main12
+      Main13
       Paths_samples
   hs-source-dirs:
       app
@@ -127,6 +134,7 @@ executable main04
     , lens
     , mtl
     , operational
+    , pipes
     , split
     , time
     , vector
@@ -146,6 +154,7 @@ executable main05
       Main10
       Main11
       Main12
+      Main13
       Paths_samples
   hs-source-dirs:
       app
@@ -158,6 +167,7 @@ executable main05
     , lens
     , mtl
     , operational
+    , pipes
     , split
     , time
     , vector
@@ -177,6 +187,7 @@ executable main06
       Main10
       Main11
       Main12
+      Main13
       Paths_samples
   hs-source-dirs:
       app
@@ -189,6 +200,7 @@ executable main06
     , lens
     , mtl
     , operational
+    , pipes
     , split
     , time
     , vector
@@ -208,6 +220,7 @@ executable main07
       Main10
       Main11
       Main12
+      Main13
       Paths_samples
   hs-source-dirs:
       app
@@ -220,6 +233,7 @@ executable main07
     , lens
     , mtl
     , operational
+    , pipes
     , split
     , time
     , vector
@@ -239,6 +253,7 @@ executable main08
       Main10
       Main11
       Main12
+      Main13
       Paths_samples
   hs-source-dirs:
       app
@@ -251,6 +266,7 @@ executable main08
     , lens
     , mtl
     , operational
+    , pipes
     , split
     , time
     , vector
@@ -270,6 +286,7 @@ executable main09
       Main10
       Main11
       Main12
+      Main13
       Paths_samples
   hs-source-dirs:
       app
@@ -282,6 +299,7 @@ executable main09
     , lens
     , mtl
     , operational
+    , pipes
     , split
     , time
     , vector
@@ -301,6 +319,7 @@ executable main10
       Main09
       Main11
       Main12
+      Main13
       Paths_samples
   hs-source-dirs:
       app
@@ -313,6 +332,7 @@ executable main10
     , lens
     , mtl
     , operational
+    , pipes
     , split
     , time
     , vector
@@ -332,6 +352,7 @@ executable main11
       Main09
       Main10
       Main12
+      Main13
       Paths_samples
   hs-source-dirs:
       app
@@ -344,6 +365,7 @@ executable main11
     , lens
     , mtl
     , operational
+    , pipes
     , split
     , time
     , vector
@@ -363,6 +385,7 @@ executable main12
       Main09
       Main10
       Main11
+      Main13
       Paths_samples
   hs-source-dirs:
       app
@@ -375,6 +398,40 @@ executable main12
     , lens
     , mtl
     , operational
+    , pipes
+    , split
+    , time
+    , vector
+  default-language: Haskell2010
+
+executable main13
+  main-is: Main13.hs
+  other-modules:
+      Main01
+      Main02
+      Main03
+      Main04
+      Main05
+      Main06
+      Main07
+      Main08
+      Main09
+      Main10
+      Main11
+      Main12
+      Paths_samples
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aeson
+    , attoparsec
+    , base >=4.7 && <5
+    , bytestring
+    , lens
+    , mtl
+    , operational
+    , pipes
     , split
     , time
     , vector

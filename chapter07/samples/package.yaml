@@ -12,6 +12,7 @@ dependencies:
   - lens
   - operational
   - mtl
+  - pipes
 
 ghc-options:
   - -threaded
@@ -65,4 +66,8 @@ executables:
 
   main12:
     main: Main12.hs
+    source-dirs: app
+
+  main13:
+    main: Main13.hs
     source-dirs: app
