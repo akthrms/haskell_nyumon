@@ -20,6 +20,8 @@ executable main01
       Main08
       Main09
       Main10
+      Main11
+      Main12
       Paths_samples
   hs-source-dirs:
       app
@@ -30,6 +32,8 @@ executable main01
     , base >=4.7 && <5
     , bytestring
     , lens
+    , mtl
+    , operational
     , split
     , time
     , vector
@@ -47,6 +51,8 @@ executable main02
       Main08
       Main09
       Main10
+      Main11
+      Main12
       Paths_samples
   hs-source-dirs:
       app
@@ -57,6 +63,8 @@ executable main02
     , base >=4.7 && <5
     , bytestring
     , lens
+    , mtl
+    , operational
     , split
     , time
     , vector
@@ -74,6 +82,8 @@ executable main03
       Main08
       Main09
       Main10
+      Main11
+      Main12
       Paths_samples
   hs-source-dirs:
       app
@@ -84,6 +94,8 @@ executable main03
     , base >=4.7 && <5
     , bytestring
     , lens
+    , mtl
+    , operational
     , split
     , time
     , vector
@@ -101,6 +113,8 @@ executable main04
       Main08
       Main09
       Main10
+      Main11
+      Main12
       Paths_samples
   hs-source-dirs:
       app
@@ -111,6 +125,8 @@ executable main04
     , base >=4.7 && <5
     , bytestring
     , lens
+    , mtl
+    , operational
     , split
     , time
     , vector
@@ -128,6 +144,8 @@ executable main05
       Main08
       Main09
       Main10
+      Main11
+      Main12
       Paths_samples
   hs-source-dirs:
       app
@@ -138,6 +156,8 @@ executable main05
     , base >=4.7 && <5
     , bytestring
     , lens
+    , mtl
+    , operational
     , split
     , time
     , vector
@@ -155,6 +175,8 @@ executable main06
       Main08
       Main09
       Main10
+      Main11
+      Main12
       Paths_samples
   hs-source-dirs:
       app
@@ -165,6 +187,8 @@ executable main06
     , base >=4.7 && <5
     , bytestring
     , lens
+    , mtl
+    , operational
     , split
     , time
     , vector
@@ -182,6 +206,8 @@ executable main07
       Main08
       Main09
       Main10
+      Main11
+      Main12
       Paths_samples
   hs-source-dirs:
       app
@@ -192,6 +218,8 @@ executable main07
     , base >=4.7 && <5
     , bytestring
     , lens
+    , mtl
+    , operational
     , split
     , time
     , vector
@@ -209,6 +237,8 @@ executable main08
       Main07
       Main09
       Main10
+      Main11
+      Main12
       Paths_samples
   hs-source-dirs:
       app
@@ -219,6 +249,8 @@ executable main08
     , base >=4.7 && <5
     , bytestring
     , lens
+    , mtl
+    , operational
     , split
     , time
     , vector
@@ -236,6 +268,8 @@ executable main09
       Main07
       Main08
       Main10
+      Main11
+      Main12
       Paths_samples
   hs-source-dirs:
       app
@@ -246,6 +280,8 @@ executable main09
     , base >=4.7 && <5
     , bytestring
     , lens
+    , mtl
+    , operational
     , split
     , time
     , vector
@@ -263,6 +299,8 @@ executable main10
       Main07
       Main08
       Main09
+      Main11
+      Main12
       Paths_samples
   hs-source-dirs:
       app
@@ -273,6 +311,70 @@ executable main10
     , base >=4.7 && <5
     , bytestring
     , lens
+    , mtl
+    , operational
+    , split
+    , time
+    , vector
+  default-language: Haskell2010
+
+executable main11
+  main-is: Main11.hs
+  other-modules:
+      Main01
+      Main02
+      Main03
+      Main04
+      Main05
+      Main06
+      Main07
+      Main08
+      Main09
+      Main10
+      Main12
+      Paths_samples
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aeson
+    , attoparsec
+    , base >=4.7 && <5
+    , bytestring
+    , lens
+    , mtl
+    , operational
+    , split
+    , time
+    , vector
+  default-language: Haskell2010
+
+executable main12
+  main-is: Main12.hs
+  other-modules:
+      Main01
+      Main02
+      Main03
+      Main04
+      Main05
+      Main06
+      Main07
+      Main08
+      Main09
+      Main10
+      Main11
+      Paths_samples
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aeson
+    , attoparsec
+    , base >=4.7 && <5
+    , bytestring
+    , lens
+    , mtl
+    , operational
     , split
     , time
     , vector

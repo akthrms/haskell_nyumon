@@ -10,6 +10,8 @@ dependencies:
   - aeson
   - time
   - lens
+  - operational
+  - mtl
 
 ghc-options:
   - -threaded
@@ -55,4 +57,12 @@ executables:
 
   main10:
     main: Main10.hs
+    source-dirs: app
+
+  main11:
+    main: Main11.hs
+    source-dirs: app
+
+  main12:
+    main: Main12.hs
     source-dirs: app
