@@ -8,6 +8,8 @@ dependencies:
   - split
   - attoparsec
   - aeson
+  - time
+  - lens
 
 ghc-options:
   - -threaded
@@ -45,4 +47,12 @@ executables:
 
   main08:
     main: Main08.hs
+    source-dirs: app
+
+  main09:
+    main: Main09.hs
+    source-dirs: app
+
+  main10:
+    main: Main10.hs
     source-dirs: app
