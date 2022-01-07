@@ -8,6 +8,8 @@ ghc-options:
 
 dependencies:
   - base >= 4.7 && < 5
+  - attoparsec
+  - text
 
 library:
   source-dirs: src
@@ -25,3 +27,4 @@ tests:
     source-dirs: test
     dependencies:
       - hjq
+      - HUnit

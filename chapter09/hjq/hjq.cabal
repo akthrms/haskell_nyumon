@@ -10,14 +10,18 @@ build-type:     Simple
 
 library
   exposed-modules:
-      Lib
+      Data.Hjq
+      Data.Hjq.Parser
+      Data.Hjq.Query
   other-modules:
       Paths_hjq
   hs-source-dirs:
       src
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+      attoparsec
+    , base >=4.7 && <5
+    , text
   default-language: Haskell2010
 
 executable hjq-exe
@@ -28,8 +32,10 @@ executable hjq-exe
       app
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+      attoparsec
+    , base >=4.7 && <5
     , hjq
+    , text
   default-language: Haskell2010
 
 test-suite hjq-test
@@ -41,6 +47,9 @@ test-suite hjq-test
       test
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+      HUnit
+    , attoparsec
+    , base >=4.7 && <5
     , hjq
+    , text
   default-language: Haskell2010
