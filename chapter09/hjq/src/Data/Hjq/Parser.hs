@@ -16,16 +16,19 @@ parseJqFilter :: Text -> Either Text JqFilter
 parseJqFilter s = showParseResult (parse (jqFilterParser <* endOfInput) s `feed` "")
 
 jqFilterParser :: Parser JqFilter
-jqFilterParser = schar '.' *> (jqField <|> jqIndex <|> pure JqNil)
+jqFilterParser = skipSpaceChar '.' *> (jqField <|> jqIndex <|> jqNil)
   where
     jqFilter :: Parser JqFilter
-    jqFilter = (schar '.' *> jqField) <|> jqIndex <|> pure JqNil
+    jqFilter = (skipSpaceChar '.' *> jqField) <|> jqIndex <|> jqNil
 
     jqField :: Parser JqFilter
     jqField = JqField <$> word <* skipSpace <*> jqFilter
 
     jqIndex :: Parser JqFilter
-    jqIndex = JqIndex <$> (schar '[' *> decimal <* schar ']') <*> jqFilter
+    jqIndex = JqIndex <$> (skipSpaceChar '[' *> decimal <* skipSpaceChar ']') <*> jqFilter
+
+    jqNil :: Parser JqFilter
+    jqNil = pure JqNil
 
 showParseResult :: Show a => Result a -> Either Text a
 showParseResult (Done _ r) = Right r
@@ -34,5 +37,5 @@ showParseResult r = Left (pack . show $ r)
 word :: Parser Text
 word = fmap pack (many1 (letter <|> char '-' <|> char '_' <|> digit))
 
-schar :: Char -> Parser Char
-schar c = skipSpace *> char c <* skipSpace
+skipSpaceChar :: Char -> Parser Char
+skipSpaceChar c = skipSpace *> char c <* skipSpace
