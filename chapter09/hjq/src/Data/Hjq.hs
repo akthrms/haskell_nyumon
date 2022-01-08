@@ -13,6 +13,6 @@ import qualified Data.Text as T (Text)
 
 hjq :: B.ByteString -> T.Text -> Either T.Text B.ByteString
 hjq jsonString queryString = do
-  value <- note "Invalid json format." (decode jsonString)
+  value <- note "Invalid json format" (decode jsonString)
   query <- parseJqQuery queryString
   executeQuery query value <&> encodePretty
