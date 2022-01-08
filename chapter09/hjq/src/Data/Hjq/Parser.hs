@@ -32,7 +32,7 @@ jqFilterParser = schar '.' *> (jqField <|> jqIndex <|> jqNil)
 
 showParseResult :: Show a => Result a -> Either Text a
 showParseResult (Done _ r) = Right r
-showParseResult r = Left (pack . show $ r)
+showParseResult r = Left (pack (show r))
 
 word :: Parser Text
 word = fmap pack (many1 (letter <|> char '-' <|> char '_' <|> digit))
