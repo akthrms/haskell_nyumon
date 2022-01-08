@@ -22,7 +22,7 @@ jqFilterParser = schar '.' *> (jqField <|> jqIndex <|> jqNil)
     jqFilter = (schar '.' *> jqField) <|> jqIndex <|> jqNil
 
     jqField :: Parser JqFilter
-    jqField = JqField <$> word <* skipSpace <*> jqFilter
+    jqField = JqField <$> (word <* skipSpace) <*> jqFilter
 
     jqIndex :: Parser JqFilter
     jqIndex = JqIndex <$> (schar '[' *> decimal <* schar ']') <*> jqFilter
