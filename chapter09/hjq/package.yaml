@@ -10,6 +10,14 @@ dependencies:
   - base >= 4.7 && < 5
   - attoparsec
   - text
+  - bytestring
+  - aeson
+  - aeson-pretty
+  - lens
+  - lens-aeson
+  - vector
+  - unordered-containers
+  - errors
 
 library:
   source-dirs: src
