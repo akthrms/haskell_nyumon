@@ -61,7 +61,7 @@ jqQueryParser :: Parser JqQuery
 jqQueryParser = queryArray <|> queryFilter <|> queryObject
   where
     queryArray :: Parser JqQuery
-    queryArray = JqQueryArray <$> (schar '[' *> jqQueryParser `sepBy` schar ',' <* schar ']')
+    queryArray = JqQueryArray <$> (schar '[' *> (jqQueryParser `sepBy` schar ',') <* schar ']')
 
     queryObject :: Parser JqQuery
     queryObject = JqQueryObject <$> (schar '{' *> (qObj `sepBy` schar ',') <* schar '}')
