@@ -44,10 +44,6 @@ jqFilterParser = schar '.' *> (jqField <|> jqIndex <|> jqNil)
     jqNil :: Parser JqFilter
     jqNil = pure JqNil
 
-showParseResult :: Show a => Result a -> Either Text a
-showParseResult (Done _ r) = Right r
-showParseResult r = Left (pack (show r))
-
 data JqQuery
   = JqQueryObject [(Text, JqQuery)]
   | JqQueryArray [JqQuery]
@@ -71,6 +67,10 @@ jqQueryParser = queryArray <|> queryFilter <|> queryObject
 
     queryFilter :: Parser JqQuery
     queryFilter = JqQueryFilter <$> jqFilterParser
+
+showParseResult :: Show a => Result a -> Either Text a
+showParseResult (Done _ r) = Right r
+showParseResult r = Left (pack (show r))
 
 word :: Parser Text
 word = fmap pack (many1 (letter <|> char '-' <|> char '_' <|> digit))

@@ -18,7 +18,7 @@ main = do
       json <- B.getContents
       printResult (hjq json (T.pack query))
     _ -> do
-      putStrLn ("Invalid arguments error.: " ++ show args)
+      putStrLn ("Invalid arguments error: " ++ show args)
       exitWith (ExitFailure 1)
 
 printResult :: Either T.Text B.ByteString -> IO ()

@@ -2,15 +2,20 @@
 
 module Main where
 
-import Control.Lens
-import Data.Aeson
-import Data.Aeson.Lens
+import Control.Lens ((^?))
+import Data.Aeson (Value (Array, Number, Object, String))
+import Data.Aeson.Lens (key, nth)
 import qualified Data.HashMap.Strict as H
 import Data.Hjq.Parser
-import Data.Hjq.Query
-import Data.Text
+  ( JqFilter (..),
+    JqQuery (..),
+    parseJqFilter,
+    parseJqQuery,
+  )
+import Data.Hjq.Query (applyFilter, executeQuery)
+import Data.Text (Text, unpack)
 import qualified Data.Vector as V
-import Test.HUnit
+import Test.HUnit (Test (TestList), runTestTT, (~:), (~?=))
 
 main :: IO ()
 main = do
@@ -102,8 +107,12 @@ executeQueryTest :: Test
 executeQueryTest =
   TestList
     [ "executeQuery test 1" ~: executeQuery (unsafeParseQuery "{}") testData ~?= Right (Object (H.fromList [])),
-      "executeQuery test 2" ~: executeQuery (unsafeParseQuery "{\"field1\": ., \"field2\": .string-field}") testData ~?= Right (Object (H.fromList [("field1", testData), ("field2", String "string value")])),
-      "executeQuery test 3" ~: executeQuery (unsafeParseQuery "[.string-field, .nested-field.inner-string]") testData ~?= Right (Array (V.fromList [String "string value", String "inner value"]))
+      "executeQuery test 2"
+        ~: executeQuery (unsafeParseQuery "{\"field1\": ., \"field2\": .string-field}") testData
+        ~?= Right (Object (H.fromList [("field1", testData), ("field2", String "string value")])),
+      "executeQuery test 3"
+        ~: executeQuery (unsafeParseQuery "[.string-field, .nested-field.inner-string]") testData
+        ~?= Right (Array (V.fromList [String "string value", String "inner value"]))
     ]
 
 testData :: Value
