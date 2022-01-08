@@ -85,7 +85,7 @@ applyFilterTest =
     [ "applyFilter test 1" ~: applyFilter (unsafeParseFilter ".") testData ~?= Right testData,
       "applyFilter test 2"
         ~: Just (applyFilter (unsafeParseFilter ".string-field") testData)
-          ~?= Right <$> (testData ^? key "string-field"),
+        ~?= Right <$> (testData ^? key "string-field"),
       "applyFilter test 3"
         ~: Just (applyFilter (unsafeParseFilter ".nested-field.inner-string") testData)
         ~?= Right <$> (testData ^? key "nested-field" . key "inner-string"),
