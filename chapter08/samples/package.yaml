@@ -18,3 +18,7 @@ executables:
   main02:
     main: Main02.hs
     source-dirs: app
+
+  main03:
+    main: Main03.hs
+    source-dirs: app
