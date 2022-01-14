@@ -4,6 +4,7 @@ version: 0.1.0.0
 dependencies:
   - base >= 4.7 && < 5
   - monad-par
+  - stm
 
 ghc-options:
   - -threaded
@@ -25,4 +26,8 @@ executables:
 
   main04:
     main: Main04.hs
+    source-dirs: app
+
+  main05:
+    main: Main05.hs
     source-dirs: app
